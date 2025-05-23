@@ -1,9 +1,13 @@
 #[derive(Clone)]
-pub struct CorreoElectronico(String);
+pub struct CorreoElectronico {
+    direccionDeCorreo: String,
+}
 impl CorreoElectronico {
     pub fn new(correo: &str) -> Result<Self, String> {
         if correo.contains("@") {
-            Ok(Self(String::from(correo)))
+            Ok(Self {
+                direccionDeCorreo: String::from(correo),
+            })
         } else {
             Err(format!(
                 "[{correo}] no tiene un formato valido para ser un correo electrónico."
@@ -13,20 +17,24 @@ impl CorreoElectronico {
 }
 impl std::fmt::Display for CorreoElectronico {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{self}")
+        write!(f, "{}", self.direccionDeCorreo)
     }
 }
 
 #[derive(Clone)]
-pub struct Telefono(String);
+pub struct Telefono {
+    numero: String,
+}
 impl Telefono {
     pub fn new(telefono: &str) -> Self {
-        Self(String::from(telefono))
+        Self {
+            numero: String::from(telefono),
+        }
     }
 }
 impl std::fmt::Display for Telefono {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{self}")
+        write!(f, "{}", self.numero)
     }
 }
 
