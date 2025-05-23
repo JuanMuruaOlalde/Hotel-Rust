@@ -1,5 +1,6 @@
 use super::datos_de_huespedes::DatosDeHuespedes;
 use super::huespedes::Huesped;
+use crate::util::{CorreoElectronico, DocumentoDeIdentidad, Telefono};
 
 pub struct HuespedesParaPruebas {
     datos: Vec<Huesped>,
@@ -12,16 +13,16 @@ impl HuespedesParaPruebas {
                 Huesped::new(
                     "Benzirpi Mirvento",
                     crate::util::Nacionalidad::IT_Italy,
-                    "99199199199",
-                    "666777999",
-                    "benzirpi@example.com",
+                    DocumentoDeIdentidad::new(ID_DE_UN_HUESPED_DE_PRUEBAS),
+                    Telefono::new("666777999"),
+                    CorreoElectronico::new("benzirpi@example.com").unwrap(),
                 ),
                 Huesped::new(
                     "Julliane Zirteni",
                     crate::util::Nacionalidad::IT_Italy,
-                    "88188188188",
-                    "666777888",
-                    "julliane@example.com",
+                    DocumentoDeIdentidad::new(ID_DE_OTRO_HUESPED_DE_PRUEBAS),
+                    Telefono::new("666777888"),
+                    CorreoElectronico::new("julliane@example.com").unwrap(),
                 ),
             ],
         }
@@ -40,16 +41,11 @@ impl DatosDeHuespedes for HuespedesParaPruebas {
         }
     }
 
-    fn get_huesped(&self, numero_documento_id: &str) -> Result<Huesped, String> {
-        let huesped = self
-            .datos
-            .iter()
-            .find(|x| x.numero_documento_id == numero_documento_id);
+    fn get_huesped(&self, id: DocumentoDeIdentidad) -> Result<Huesped, String> {
+        let huesped = self.datos.iter().find(|x| x.numero_documento_id == id);
         match huesped {
             Some(h) => Ok(h.clone()),
-            None => Err(format!(
-                "No existe huesped con documento_id {numero_documento_id}"
-            )),
+            None => Err(format!("No existe huesped con documento_id {id}")),
         }
     }
 }

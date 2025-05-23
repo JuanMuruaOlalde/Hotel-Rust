@@ -1,3 +1,52 @@
+#[derive(Clone)]
+pub struct CorreoElectronico(String);
+impl CorreoElectronico {
+    pub fn new(correo: &str) -> Result<Self, String> {
+        if correo.contains("@") {
+            Ok(Self(String::from(correo)))
+        } else {
+            Err(format!(
+                "[{correo}] no tiene un formato valido para ser un correo electrónico."
+            ))
+        }
+    }
+}
+impl std::fmt::Display for CorreoElectronico {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self}")
+    }
+}
+
+#[derive(Clone)]
+pub struct Telefono(String);
+impl Telefono {
+    pub fn new(telefono: &str) -> Self {
+        Self(String::from(telefono))
+    }
+}
+impl std::fmt::Display for Telefono {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self}")
+    }
+}
+
+#[derive(Clone, PartialEq)]
+pub struct DocumentoDeIdentidad {
+    numero: String,
+}
+impl DocumentoDeIdentidad {
+    pub fn new(id: &str) -> Self {
+        Self {
+            numero: String::from(id),
+        }
+    }
+}
+impl std::fmt::Display for DocumentoDeIdentidad {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.numero)
+    }
+}
+
 #[allow(non_camel_case_types)]
 #[allow(dead_code)]
 #[derive(Clone)]

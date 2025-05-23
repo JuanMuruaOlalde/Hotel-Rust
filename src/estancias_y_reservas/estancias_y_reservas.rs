@@ -2,6 +2,7 @@ use chrono::{DateTime, Duration, Local};
 
 use crate::habitaciones::habitaciones::Habitacion;
 use crate::huespedes::huespedes::Huesped;
+use crate::util::DocumentoDeIdentidad;
 
 use super::datos_de_estancias::DatosDeEstancias;
 
@@ -63,11 +64,11 @@ mod tests {
         };
         let un_huesped = huespedes
             .datos
-            .get_huesped(ID_DE_UN_HUESPED_DE_PRUEBAS)
+            .get_huesped(DocumentoDeIdentidad::new(ID_DE_UN_HUESPED_DE_PRUEBAS))
             .unwrap();
         let otro_huesped = huespedes
             .datos
-            .get_huesped(ID_DE_OTRO_HUESPED_DE_PRUEBAS)
+            .get_huesped(DocumentoDeIdentidad::new(ID_DE_OTRO_HUESPED_DE_PRUEBAS))
             .unwrap();
         let huespedes_a_alojar = vec![un_huesped, otro_huesped];
 
