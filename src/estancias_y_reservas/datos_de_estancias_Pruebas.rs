@@ -1,15 +1,15 @@
 use chrono::{DateTime, Local};
 
+use super::Estancia;
 use super::datos_de_estancias::DatosDeEstancias;
-use super::estancias_y_reservas::Estancia;
-use crate::habitaciones::habitaciones::Habitacion;
-use crate::huespedes::huespedes::Huesped;
+use crate::habitaciones::Habitacion;
+use crate::huespedes::Huesped;
 
-pub struct EstanciasParaPruebas {
+pub struct DatosDeEstancias_Pruebas {
     pub datos: Vec<Estancia>,
 }
 
-impl Default for EstanciasParaPruebas {
+impl Default for DatosDeEstancias_Pruebas {
     fn default() -> Self {
         Self {
             datos: Default::default(),
@@ -17,7 +17,7 @@ impl Default for EstanciasParaPruebas {
     }
 }
 
-impl DatosDeEstancias for EstanciasParaPruebas {
+impl DatosDeEstancias for DatosDeEstancias_Pruebas {
     fn crear_estancia(
         &mut self,
         habitaciones: Vec<Habitacion>,

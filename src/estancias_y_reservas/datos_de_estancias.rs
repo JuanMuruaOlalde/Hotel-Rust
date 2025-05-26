@@ -1,8 +1,8 @@
 use chrono::{DateTime, Local};
 
-use super::estancias_y_reservas::Estancia;
-use crate::habitaciones::habitaciones::Habitacion;
-use crate::huespedes::huespedes::Huesped;
+use super::Estancia;
+use crate::habitaciones::Habitacion;
+use crate::huespedes::Huesped;
 
 pub trait DatosDeEstancias {
     fn crear_estancia(

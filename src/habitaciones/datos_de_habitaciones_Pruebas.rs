@@ -1,18 +1,18 @@
 use uuid::Uuid;
 
+use super::Habitacion;
 use super::datos_de_habitaciones::DatosDeHabitaciones;
-use super::habitaciones::Habitacion;
 
-use super::habitaciones::TipoDeBaño;
-use super::habitaciones::TipoDeHabitacion;
+use super::TipoDeBaño;
+use super::TipoDeHabitacion;
 
-pub struct HabitacionesParaPruebas {
+pub struct DatosDeHabitaciones_Pruebas {
     lista_de_habitaciones: Vec<Habitacion>,
 }
 
-impl HabitacionesParaPruebas {
-    pub fn new() -> HabitacionesParaPruebas {
-        HabitacionesParaPruebas {
+impl DatosDeHabitaciones_Pruebas {
+    pub fn new() -> DatosDeHabitaciones_Pruebas {
+        DatosDeHabitaciones_Pruebas {
             lista_de_habitaciones: vec![
                 Habitacion::new("101", TipoDeHabitacion::SENCILLA, TipoDeBaño::ConDUCHA),
                 Habitacion::new("102", TipoDeHabitacion::DOBLE, TipoDeBaño::ConBAÑERA),
@@ -24,7 +24,7 @@ impl HabitacionesParaPruebas {
 pub const ID_DE_UNA_HABITACION_DE_PRUEBAS: &str = "101";
 pub const ID_DE_OTRA_HABITACION_DE_PRUEBAS: &str = "102";
 
-impl DatosDeHabitaciones for HabitacionesParaPruebas {
+impl DatosDeHabitaciones for DatosDeHabitaciones_Pruebas {
     fn get_habitacion(&self, nombre: &str) -> Result<Habitacion, String> {
         let habitacion = self
             .lista_de_habitaciones
