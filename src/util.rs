@@ -1,12 +1,12 @@
 #[derive(Clone)]
 pub struct CorreoElectronico {
-    direccionDeCorreo: String,
+    direccion_de_correo: String,
 }
 impl CorreoElectronico {
     pub fn new(correo: &str) -> Result<Self, String> {
         if correo.contains("@") {
             Ok(Self {
-                direccionDeCorreo: String::from(correo),
+                direccion_de_correo: String::from(correo),
             })
         } else {
             Err(format!(
@@ -17,7 +17,7 @@ impl CorreoElectronico {
 }
 impl std::fmt::Display for CorreoElectronico {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.direccionDeCorreo)
+        write!(f, "{}", self.direccion_de_correo)
     }
 }
 

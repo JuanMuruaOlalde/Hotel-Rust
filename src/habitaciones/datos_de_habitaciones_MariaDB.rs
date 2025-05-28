@@ -1,13 +1,13 @@
 use super::DatosDeHabitaciones;
-pub struct DatosDeHabitaciones_MariaDB {}
+pub struct DatosDeHabitacionesMariaDB {}
 
-impl DatosDeHabitaciones for DatosDeHabitaciones_MariaDB {
+impl DatosDeHabitaciones for DatosDeHabitacionesMariaDB {
     fn get_habitacion(&self, nombre: &str) -> Result<super::Habitacion, String> {
         todo!()
     }
 }
 
-impl DatosDeHabitaciones_MariaDB {
+impl DatosDeHabitacionesMariaDB {
     pub fn new() -> Self {
         Self {}
     }

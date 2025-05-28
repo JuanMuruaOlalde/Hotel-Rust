@@ -2,13 +2,13 @@ use super::Huesped;
 use super::datos_de_huespedes::DatosDeHuespedes;
 use crate::util::{CorreoElectronico, DocumentoDeIdentidad, Telefono};
 
-pub struct DatosDeHuespedes_Pruebas {
+pub struct DatosDeHuespedesPruebas {
     datos: Vec<Huesped>,
 }
 
-impl DatosDeHuespedes_Pruebas {
-    pub fn new() -> DatosDeHuespedes_Pruebas {
-        DatosDeHuespedes_Pruebas {
+impl DatosDeHuespedesPruebas {
+    pub fn new() -> DatosDeHuespedesPruebas {
+        DatosDeHuespedesPruebas {
             datos: vec![
                 Huesped::new(
                     "Benzirpi Mirvento",
@@ -32,7 +32,7 @@ impl DatosDeHuespedes_Pruebas {
 pub const ID_DE_UN_HUESPED_DE_PRUEBAS: &str = "99199199199";
 pub const ID_DE_OTRO_HUESPED_DE_PRUEBAS: &str = "88188188188";
 
-impl DatosDeHuespedes for DatosDeHuespedes_Pruebas {
+impl DatosDeHuespedes for DatosDeHuespedesPruebas {
     fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<Huesped, String> {
         let huesped = self.datos.iter().find(|x| x.get_id_interno() == id);
         match huesped {

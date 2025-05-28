@@ -1,8 +1,8 @@
 use super::DatosDeEstancias;
 
-pub struct DatosDeEstancias_MariaDB {}
+pub struct DatosDeEstanciasMariaDB {}
 
-impl DatosDeEstancias for DatosDeEstancias_MariaDB {
+impl DatosDeEstancias for DatosDeEstanciasMariaDB {
     fn crear_estancia(
         &mut self,
         habitaciones: Vec<crate::habitaciones::Habitacion>,
@@ -17,15 +17,14 @@ impl DatosDeEstancias for DatosDeEstancias_MariaDB {
     }
 }
 
-impl Default for DatosDeEstancias_MariaDB {
+impl Default for DatosDeEstanciasMariaDB {
     fn default() -> Self {
         Self {}
     }
 }
 
-impl DatosDeEstancias_MariaDB {
+impl DatosDeEstanciasMariaDB {
     pub fn new() -> Self {
         Self {}
     }
-
 }

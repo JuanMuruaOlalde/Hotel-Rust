@@ -1,8 +1,8 @@
 use super::DatosDeHuespedes;
 
-pub struct DatosDeHuespedes_MariaDB {}
+pub struct DatosDeHuespedesMariaDB {}
 
-impl DatosDeHuespedes for DatosDeHuespedes_MariaDB {
+impl DatosDeHuespedes for DatosDeHuespedesMariaDB {
     fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<super::Huesped, String> {
         todo!()
     }
@@ -12,7 +12,7 @@ impl DatosDeHuespedes for DatosDeHuespedes_MariaDB {
     }
 }
 
-impl DatosDeHuespedes_MariaDB {
+impl DatosDeHuespedesMariaDB {
     pub fn new() -> Self {
         Self {}
     }

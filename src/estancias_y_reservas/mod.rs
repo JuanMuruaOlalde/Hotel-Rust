@@ -2,12 +2,11 @@ pub mod datos_de_estancias;
 pub mod datos_de_estancias_mariadb;
 mod datos_de_estancias_pruebas;
 
-use chrono::{DateTime, Duration, Local};
+use chrono::{DateTime, Local};
 
 use crate::estancias_y_reservas::datos_de_estancias::DatosDeEstancias;
 use crate::habitaciones::Habitacion;
 use crate::huespedes::Huesped;
-use crate::util::DocumentoDeIdentidad;
 
 pub struct Estancias<T: DatosDeEstancias> {
     pub datos: T,
@@ -35,25 +34,26 @@ mod tests {
     use crate::habitaciones::Habitaciones;
     use crate::habitaciones::datos_de_habitaciones::DatosDeHabitaciones;
     use crate::habitaciones::datos_de_habitaciones_pruebas::{
-        DatosDeHabitaciones_Pruebas, ID_DE_OTRA_HABITACION_DE_PRUEBAS,
+        DatosDeHabitacionesPruebas, ID_DE_OTRA_HABITACION_DE_PRUEBAS,
         ID_DE_UNA_HABITACION_DE_PRUEBAS,
     };
     use crate::huespedes::Huespedes;
     use crate::huespedes::datos_de_huespedes::DatosDeHuespedes;
     use crate::huespedes::datos_de_huespedes_pruebas::{
-        DatosDeHuespedes_Pruebas, ID_DE_OTRO_HUESPED_DE_PRUEBAS, ID_DE_UN_HUESPED_DE_PRUEBAS,
+        DatosDeHuespedesPruebas, ID_DE_OTRO_HUESPED_DE_PRUEBAS, ID_DE_UN_HUESPED_DE_PRUEBAS,
     };
+    use crate::util::DocumentoDeIdentidad;
 
-    use crate::estancias_y_reservas::datos_de_estancias_pruebas::DatosDeEstancias_Pruebas;
+    use crate::estancias_y_reservas::datos_de_estancias_pruebas::DatosDeEstanciasPruebas;
 
     #[test]
     fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas() {
         let mut estancias = Estancias {
-            datos: DatosDeEstancias_Pruebas::default(),
+            datos: DatosDeEstanciasPruebas::default(),
         };
 
         let habitaciones = Habitaciones {
-            datos: DatosDeHabitaciones_Pruebas::new(),
+            datos: DatosDeHabitacionesPruebas::new(),
         };
         let habitacion01 = habitaciones
             .datos
@@ -66,7 +66,7 @@ mod tests {
         let habitaciones_a_ocupar = vec![habitacion01, habitacion02];
 
         let huespedes = Huespedes {
-            datos: DatosDeHuespedes_Pruebas::new(),
+            datos: DatosDeHuespedesPruebas::new(),
         };
         let un_huesped = huespedes
             .datos
