@@ -1,11 +1,11 @@
 use chrono::{Duration, Local};
 
 use hotel_rust::estancias_y_reservas::Estancias;
-use hotel_rust::estancias_y_reservas::datos_de_estancias_MariaDB::DatosDeEstancias_MariaDB;
+use hotel_rust::estancias_y_reservas::datos_de_estancias_mariadb::DatosDeEstancias_MariaDB;
 use hotel_rust::habitaciones::Habitaciones;
-use hotel_rust::habitaciones::datos_de_habitaciones_MariaDB::DatosDeHabitaciones_MariaDB;
+use hotel_rust::habitaciones::datos_de_habitaciones_mariadb::DatosDeHabitaciones_MariaDB;
 use hotel_rust::huespedes::Huespedes;
-use hotel_rust::huespedes::datos_de_huespedes_MariaDB::DatosDeHuespedes_MariaDB;
+use hotel_rust::huespedes::datos_de_huespedes_mariadb::DatosDeHuespedes_MariaDB;
 use hotel_rust::util::DocumentoDeIdentidad;
 
 #[test]

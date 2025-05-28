@@ -1,6 +1,6 @@
 pub mod datos_de_huespedes;
-pub mod datos_de_huespedes_MariaDB;
-pub mod datos_de_huespedes_Pruebas;
+pub mod datos_de_huespedes_mariadb;
+pub mod datos_de_huespedes_pruebas;
 
 use uuid::Uuid;
 
@@ -8,8 +8,8 @@ use super::huespedes::datos_de_huespedes::DatosDeHuespedes;
 use crate::util::CorreoElectronico;
 use crate::util::{DocumentoDeIdentidad, Nacionalidad, Telefono};
 
-pub struct Huespedes<'a> {
-    pub datos: &'a dyn DatosDeHuespedes,
+pub struct Huespedes<T: DatosDeHuespedes> {
+    pub datos: T,
 }
 
 #[derive(Clone)]

@@ -1,13 +1,13 @@
 pub mod datos_de_habitaciones;
-pub mod datos_de_habitaciones_MariaDB;
-pub mod datos_de_habitaciones_Pruebas;
+pub mod datos_de_habitaciones_mariadb;
+pub mod datos_de_habitaciones_pruebas;
 
 use uuid::Uuid;
 
 use datos_de_habitaciones::DatosDeHabitaciones;
 
-pub struct Habitaciones<'a> {
-    pub datos: &'a dyn DatosDeHabitaciones,
+pub struct Habitaciones<T: DatosDeHabitaciones> {
+    pub datos: T,
 }
 
 #[derive(Clone)]
