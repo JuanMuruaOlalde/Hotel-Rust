@@ -1,8 +1,12 @@
-use super::DatosDeEstancias;
+use sqlx::{MySql, Pool};
 
-pub struct DatosDeEstanciasMariaDB {}
+use super::datos_de_estancias::DatosDeEstancias;
 
-impl DatosDeEstancias for DatosDeEstanciasMariaDB {
+pub struct DatosDeEstanciasMariaDB<'a> {
+    conexion_con_la_bd: &'a Pool<MySql>,
+}
+
+impl<'a> DatosDeEstancias for DatosDeEstanciasMariaDB<'a> {
     fn crear_estancia(
         &mut self,
         habitaciones: Vec<crate::habitaciones::Habitacion>,
@@ -12,19 +16,13 @@ impl DatosDeEstancias for DatosDeEstanciasMariaDB {
         todo!()
     }
 
-    fn la_habitacion_esta_libre(&self, id_habitacion: &str) -> bool {
+    fn get_estancias(&self) -> Vec<super::Estancia> {
         todo!()
     }
 }
 
-impl Default for DatosDeEstanciasMariaDB {
-    fn default() -> Self {
-        Self {}
-    }
-}
-
-impl DatosDeEstanciasMariaDB {
-    pub fn new() -> Self {
-        Self {}
+impl<'a> DatosDeEstanciasMariaDB<'a> {
+    pub fn new(conexion_con_la_bd: &'a Pool<MySql>) -> Self {
+        Self { conexion_con_la_bd }
     }
 }

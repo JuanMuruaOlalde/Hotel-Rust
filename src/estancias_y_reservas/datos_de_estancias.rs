@@ -1,5 +1,6 @@
 use chrono::{DateTime, Local};
 
+use super::Estancia;
 use crate::habitaciones::Habitacion;
 use crate::huespedes::Huesped;
 
@@ -11,5 +12,5 @@ pub trait DatosDeEstancias {
         salida_prevista: DateTime<Local>,
     ) -> Result<String, String>;
 
-    fn la_habitacion_esta_libre(&self, id_habitacion: &str) -> bool;
+    fn get_estancias(&self) -> Vec<Estancia>;
 }

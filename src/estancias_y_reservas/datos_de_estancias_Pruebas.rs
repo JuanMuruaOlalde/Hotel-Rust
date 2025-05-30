@@ -35,16 +35,7 @@ impl DatosDeEstancias for DatosDeEstanciasPruebas {
         Ok(String::from("Estancia creada correctamente"))
     }
 
-    fn la_habitacion_esta_libre(&self, nombre: &str) -> bool {
-        if self.datos.iter().any(|estancia| {
-            estancia
-                .get_habitaciones_ocupadas()
-                .iter()
-                .any(|habitacion| habitacion.nombre == nombre)
-        }) {
-            false
-        } else {
-            true
-        }
+    fn get_estancias(&self) -> Vec<Estancia> {
+        self.datos.clone()
     }
 }

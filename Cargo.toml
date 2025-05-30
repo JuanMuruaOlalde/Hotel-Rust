@@ -1,13 +1,11 @@
 [package]
-name = "hotel-rust"
+name = "hotel_rust"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
 chrono = "0.4.41"
-
-[dependencies.uuid]
-version = "1.16.0"
-features = [
-    "v7",
-]
+uuid = { version="1.16.0", features=["v7"] }
+dotenv = "0.15.0"
+sqlx = { version="0.8.6", features=["runtime-tokio", "mysql"] }
+tokio = { version="1.45.1", features=["rt", "macros"] }

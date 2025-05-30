@@ -1,8 +1,12 @@
+use sqlx::{MySql, Pool};
+
 use super::DatosDeHuespedes;
 
-pub struct DatosDeHuespedesMariaDB {}
+pub struct DatosDeHuespedesMariaDB<'a> {
+    conexion_con_la_bd: &'a Pool<MySql>,
+}
 
-impl DatosDeHuespedes for DatosDeHuespedesMariaDB {
+impl<'a> DatosDeHuespedes for DatosDeHuespedesMariaDB<'a> {
     fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<super::Huesped, String> {
         todo!()
     }
@@ -12,8 +16,8 @@ impl DatosDeHuespedes for DatosDeHuespedesMariaDB {
     }
 }
 
-impl DatosDeHuespedesMariaDB {
-    pub fn new() -> Self {
-        Self {}
+impl<'a> DatosDeHuespedesMariaDB<'a> {
+    pub fn new(conexion_con_la_bd: &'a Pool<MySql>) -> Self {
+        Self { conexion_con_la_bd }
     }
 }
