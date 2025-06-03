@@ -1,4 +1,18 @@
 use dotenv::dotenv;
+use hotel_rust::{
+    estancias_y_reservas::{
+        datos_de_estancias_mariadb::DatosDeEstanciasMariaDB,
+        datos_de_reservas_mariadb::DatosDeReservasMariaDB,
+        manejo_de_estancias_y_reservas::Estancias_y_Reservas,
+    },
+    habitaciones::{
+        datos_de_habitaciones_mariadb::DatosDeHabitacionesMariaDB,
+        manejo_de_habitaciones::Habitaciones,
+    },
+    huespedes::{
+        datos_de_huespedes_mariadb::DatosDeHuespedesMariaDB, manejo_de_huespedes::Huespedes,
+    },
+};
 use sqlx::mysql::MySqlPoolOptions;
 
 #[tokio::main(flavor = "current_thread")]
@@ -17,16 +31,34 @@ async fn main() {
         .expect("No se ha podido establecer conexión con la base de datos.");
     println!("Conexión establecida.");
 
-    println!("Se va a realizar una prueba...");
-    let algo = sqlx::query("SELECT ?")
-        .bind(150_i64)
-        .fetch_all(&conexion_con_la_bd)
-        .await;
-    match algo {
-        Ok(resultado) => println!("Resultado: {:?}", resultado),
-        Err(e) => println!("Error: {:?}", e),
-    }
+    // println!("Se va a realizar una prueba...");
+    // let algo = sqlx::query("SELECT ?")
+    //     .bind(150_i64)
+    //     .fetch_all(&conexion_con_la_bd)
+    //     .await;
+    // match algo {
+    //     Ok(resultado) => println!("Resultado: {:?}", resultado),
+    //     Err(e) => println!("Error: {:?}", e),
+    // }
 
+    // aquí irá el código que inicializa y lanza la aplicación
     println!();
     println!("Hello, hotel!");
+    println!();
+
+    // let mut estancias_y_reservas = Estancias_y_Reservas {
+    //     estancias: DatosDeEstanciasMariaDB::new(&conexion_con_la_bd),
+    //     reservas: DatosDeReservasMariaDB::new(&conexion_con_la_bd),
+    // };
+
+    // let habitaciones = Habitaciones {
+    //     datos: DatosDeHabitacionesMariaDB::new(&conexion_con_la_bd),
+    // };
+    // let huespedes = Huespedes {
+    //     datos: DatosDeHuespedesMariaDB::new(&conexion_con_la_bd),
+    // };
+
+    //etc, etc
+
+    conexion_con_la_bd.close().await;
 }

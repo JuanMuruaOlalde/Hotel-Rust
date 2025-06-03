@@ -1,7 +1,7 @@
 # Backlog de trabajos pendientes
 
 nota: no son todos los que están ni están todos los que son ; 
-esto son simplemente recordatorios para no olvidarme lo que, en este momento, tengo entre manos.
+esto son simplemente recordatorios para no olvidarme trabajos pendientes.
 ===============================================================
 ===============================================================
 

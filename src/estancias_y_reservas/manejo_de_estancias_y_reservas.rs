@@ -35,17 +35,17 @@ mod tests {
     use chrono::{Duration, Local};
 
     use super::*;
-    use crate::habitaciones::Habitaciones;
     use crate::habitaciones::datos_de_habitaciones::DatosDeHabitaciones;
     use crate::habitaciones::datos_de_habitaciones_pruebas::{
         DatosDeHabitacionesPruebas, ID_DE_OTRA_HABITACION_DE_PRUEBAS,
         ID_DE_UNA_HABITACION_DE_PRUEBAS,
     };
-    use crate::huespedes::Huespedes;
+    use crate::habitaciones::manejo_de_habitaciones::Habitaciones;
     use crate::huespedes::datos_de_huespedes::DatosDeHuespedes;
     use crate::huespedes::datos_de_huespedes_pruebas::{
         DatosDeHuespedesPruebas, ID_DE_OTRO_HUESPED_DE_PRUEBAS, ID_DE_UN_HUESPED_DE_PRUEBAS,
     };
+    use crate::huespedes::manejo_de_huespedes::Huespedes;
     use crate::util::DocumentoDeIdentidad;
 
     use crate::estancias_y_reservas::datos_de_estancias_pruebas::DatosDeEstanciasPruebas;

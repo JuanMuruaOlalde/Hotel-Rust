@@ -1,0 +1,42 @@
+================================================================================================
+================================================================================================
+
+
+
+================================================================================================
+
+
+
+================================================================================================
+
+pub struct BaseDeDatos {
+    pub conexion: Pool<MySql>,
+}
+
+impl BaseDeDatos {
+    pub async fn new() -> Self {
+        dotenv().ok();
+        Self {
+            conexion: MySqlPoolOptions::new()
+                .max_connections(1)
+                .connect(&std::env::var("DATABASE_URL").expect(
+                    "No se han encontrado las llaves de entrada a la base de datos para pruebas.",
+                ))
+                .await
+                .expect("No se ha podido establecer conexión con la base de datos de pruebas."),
+        }
+    }
+
+    async fn cerrar_conexión_con_la_base_de_datos(&mut self) {
+        self.conexion.close().await;
+    }
+}
+
+impl Drop for BaseDeDatos {
+    fn drop(&mut self) {
+        self.cerrar_conexión_con_la_base_de_datos();
+    }
+}
+
+================================================================================================
+================================================================================================

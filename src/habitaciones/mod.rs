@@ -1,14 +1,9 @@
 pub mod datos_de_habitaciones;
 pub mod datos_de_habitaciones_mariadb;
 pub mod datos_de_habitaciones_pruebas;
+pub mod manejo_de_habitaciones;
 
 use uuid::Uuid;
-
-use datos_de_habitaciones::DatosDeHabitaciones;
-
-pub struct Habitaciones<T: DatosDeHabitaciones> {
-    pub datos: T,
-}
 
 #[derive(Clone)]
 pub struct Habitacion {

@@ -1,16 +1,12 @@
 pub mod datos_de_huespedes;
 pub mod datos_de_huespedes_mariadb;
 pub mod datos_de_huespedes_pruebas;
+pub mod manejo_de_huespedes;
 
 use uuid::Uuid;
 
-use super::huespedes::datos_de_huespedes::DatosDeHuespedes;
 use crate::util::CorreoElectronico;
 use crate::util::{DocumentoDeIdentidad, Nacionalidad, Telefono};
-
-pub struct Huespedes<T: DatosDeHuespedes> {
-    pub datos: T,
-}
 
 #[derive(Clone)]
 pub struct Huesped {
