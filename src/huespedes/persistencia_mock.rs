@@ -1,5 +1,5 @@
-use super::Huesped;
-use super::datos_de_huespedes::DatosDeHuespedes;
+use super::modelo::Huesped;
+use super::persistencia::DatosDeHuespedes;
 use crate::util::{CorreoElectronico, DocumentoDeIdentidad, Telefono};
 
 pub struct DatosDeHuespedesPruebas {

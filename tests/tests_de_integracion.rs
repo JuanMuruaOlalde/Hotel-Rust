@@ -2,25 +2,25 @@ mod common;
 
 use chrono::{Duration, Local};
 
-use hotel_rust::estancias_y_reservas::datos_de_estancias::DatosDeEstancias;
+use hotel_rust::estancias_y_reservas::persistencia_estancias::DatosDeEstancias;
 use sqlx::{MySql, Pool};
 
 #[sqlx::test]
 async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas_prueba_con_maria_db_(
     conexion: Pool<MySql>,
 ) {
-    let mut datos = common::DatosParaLasPruebas::new(&conexion).await;
+    let mut datos = common::DatosParaPruebasDeEstanciasYReservas::new(&conexion).await;
 
     assert_eq!(
         datos
             .estancias_y_reservas
-            .la_habitacion_esta_libre("ID_DE_UNA_HABITACION_DE_PRUEBAS"),
+            .la_habitacion_esta_libre(common::ID_DE_UNA_HABITACION_DE_PRUEBAS),
         true
     );
     assert_eq!(
         datos
             .estancias_y_reservas
-            .la_habitacion_esta_libre("ID_DE_OTRA_HABITACION_DE_PRUEBAS"),
+            .la_habitacion_esta_libre(common::ID_DE_OTRA_HABITACION_DE_PRUEBAS),
         true
     );
 
@@ -36,13 +36,13 @@ async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas_prueba_con
     assert_eq!(
         datos
             .estancias_y_reservas
-            .la_habitacion_esta_libre("ID_DE_UNA_HABITACION_DE_PRUEBAS"),
+            .la_habitacion_esta_libre(common::ID_DE_UNA_HABITACION_DE_PRUEBAS),
         false
     );
     assert_eq!(
         datos
             .estancias_y_reservas
-            .la_habitacion_esta_libre("ID_DE_OTRA_HABITACION_DE_PRUEBAS"),
+            .la_habitacion_esta_libre(common::ID_DE_OTRA_HABITACION_DE_PRUEBAS),
         false
     );
 }

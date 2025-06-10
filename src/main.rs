@@ -1,17 +1,11 @@
 use dotenv::dotenv;
 use hotel_rust::{
     estancias_y_reservas::{
-        datos_de_estancias_mariadb::DatosDeEstanciasMariaDB,
-        datos_de_reservas_mariadb::DatosDeReservasMariaDB,
-        manejo_de_estancias_y_reservas::Estancias_y_Reservas,
+        modelo::EstanciasYReservas, persistencia_estancias_mariadb::DatosDeEstanciasMariaDB,
+        persistencia_reservas_mariadb::DatosDeReservasMariaDB,
     },
-    habitaciones::{
-        datos_de_habitaciones_mariadb::DatosDeHabitacionesMariaDB,
-        manejo_de_habitaciones::Habitaciones,
-    },
-    huespedes::{
-        datos_de_huespedes_mariadb::DatosDeHuespedesMariaDB, manejo_de_huespedes::Huespedes,
-    },
+    habitaciones::{modelo::Habitaciones, persistencia_mariadb::DatosDeHabitacionesMariaDB},
+    huespedes::{modelo::Huespedes, persistencia_mariadb::DatosDeHuespedesMariaDB},
 };
 use sqlx::mysql::MySqlPoolOptions;
 

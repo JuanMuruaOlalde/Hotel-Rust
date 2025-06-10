@@ -1,9 +1,9 @@
 use chrono::{DateTime, Local};
 
-use super::Estancia;
-use super::datos_de_estancias::DatosDeEstancias;
-use crate::habitaciones::Habitacion;
-use crate::huespedes::Huesped;
+use super::modelo::Estancia;
+use super::persistencia_estancias::DatosDeEstancias;
+use crate::habitaciones::modelo::Habitacion;
+use crate::huespedes::modelo::Huesped;
 
 pub struct DatosDeEstanciasPruebas {
     pub datos: Vec<Estancia>,

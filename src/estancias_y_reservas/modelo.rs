@@ -1,7 +1,11 @@
-use super::datos_de_estancias::DatosDeEstancias;
-use super::datos_de_reservas::DatosDeReservas;
+use chrono::{DateTime, Local};
 
-pub struct Estancias_y_Reservas<E, R>
+use super::persistencia_estancias::DatosDeEstancias;
+use super::persistencia_reservas::DatosDeReservas;
+use crate::habitaciones::modelo::Habitacion;
+use crate::huespedes::modelo::Huesped;
+
+pub struct EstanciasYReservas<E, R>
 where
     E: DatosDeEstancias,
     R: DatosDeReservas,
@@ -10,7 +14,7 @@ where
     pub reservas: R,
 }
 
-impl<E, R> Estancias_y_Reservas<E, R>
+impl<E, R> EstanciasYReservas<E, R>
 where
     E: DatosDeEstancias,
     R: DatosDeReservas,
@@ -22,12 +26,34 @@ where
                 .iter()
                 .any(|habitacion| habitacion.nombre == nombre)
         }) {
-            false
+            return false;
         } else {
             //TODO, pendiente comprobar las reservas antes de dar la habitacion por libre.
-            true
+            if false {
+                return false;
+            }
         }
+        return true;
     }
+}
+
+#[derive(Clone)]
+pub struct Estancia {
+    pub habitaciones: Vec<Habitacion>,
+    pub huespedes: Vec<Huesped>,
+    pub entrada_real: DateTime<Local>,
+    pub salida_prevista: DateTime<Local>,
+    pub salida_real: Option<DateTime<Local>>,
+}
+
+impl Estancia {
+    pub fn get_habitaciones(&self) -> Vec<Habitacion> {
+        self.habitaciones.clone()
+    }
+}
+
+pub struct Reserva {
+    //TODO, pendiente de implementar
 }
 
 #[cfg(test)]
@@ -35,25 +61,25 @@ mod tests {
     use chrono::{Duration, Local};
 
     use super::*;
-    use crate::habitaciones::datos_de_habitaciones::DatosDeHabitaciones;
-    use crate::habitaciones::datos_de_habitaciones_pruebas::{
+    use crate::habitaciones::modelo::Habitaciones;
+    use crate::habitaciones::persistencia::DatosDeHabitaciones;
+    use crate::habitaciones::persistencia_mock::{
         DatosDeHabitacionesPruebas, ID_DE_OTRA_HABITACION_DE_PRUEBAS,
         ID_DE_UNA_HABITACION_DE_PRUEBAS,
     };
-    use crate::habitaciones::manejo_de_habitaciones::Habitaciones;
-    use crate::huespedes::datos_de_huespedes::DatosDeHuespedes;
-    use crate::huespedes::datos_de_huespedes_pruebas::{
+    use crate::huespedes::modelo::Huespedes;
+    use crate::huespedes::persistencia::DatosDeHuespedes;
+    use crate::huespedes::persistencia_mock::{
         DatosDeHuespedesPruebas, ID_DE_OTRO_HUESPED_DE_PRUEBAS, ID_DE_UN_HUESPED_DE_PRUEBAS,
     };
-    use crate::huespedes::manejo_de_huespedes::Huespedes;
     use crate::util::DocumentoDeIdentidad;
 
-    use crate::estancias_y_reservas::datos_de_estancias_pruebas::DatosDeEstanciasPruebas;
-    use crate::estancias_y_reservas::datos_de_reservas_pruebas::DatosDeReservasPruebas;
+    use crate::estancias_y_reservas::persistencia_estancias_mock::DatosDeEstanciasPruebas;
+    use crate::estancias_y_reservas::persistencia_reservas_mock::DatosDeReservasPruebas;
 
     #[test]
     fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas() {
-        let mut datos = Estancias_y_Reservas {
+        let mut datos = EstanciasYReservas {
             estancias: DatosDeEstanciasPruebas::default(),
             reservas: DatosDeReservasPruebas::default(),
         };

@@ -1,8 +1,7 @@
-use super::Habitacion;
-use super::datos_de_habitaciones::DatosDeHabitaciones;
-
-use super::TipoDeBaño;
-use super::TipoDeHabitacion;
+use super::modelo::Habitacion;
+use super::modelo::TipoDeBaño;
+use super::modelo::TipoDeHabitacion;
+use super::persistencia::DatosDeHabitaciones;
 
 pub struct DatosDeHabitacionesPruebas {
     lista_de_habitaciones: Vec<Habitacion>,
@@ -32,5 +31,20 @@ impl DatosDeHabitaciones for DatosDeHabitacionesPruebas {
             Some(h) => Ok(h.clone()),
             None => Err(format!("No existe la habitación {nombre}")),
         }
+    }
+
+    fn put_habitacion(&self, habitacion: Habitacion) -> Result<Habitacion, String> {
+        todo!();
+        // let habitacion = self
+        //     .lista_de_habitaciones
+        //     .iter()
+        //     .find(|x| x.nombre == nombre);
+        // match habitacion {
+        //     Some(h) => self.lista_de_habitaciones.swap_remove(index),
+        //     None => {
+        //         self.lista_de_habitaciones.push(habitacion);
+        //         Ok(habitacion)
+        //     }
+        // }
     }
 }

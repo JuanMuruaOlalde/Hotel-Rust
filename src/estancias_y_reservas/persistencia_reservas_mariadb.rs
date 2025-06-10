@@ -1,6 +1,6 @@
 use sqlx::{MySql, Pool};
 
-use super::datos_de_reservas::DatosDeReservas;
+use super::persistencia_reservas::DatosDeReservas;
 
 pub struct DatosDeReservasMariaDB<'a> {
     conexion_con_la_bd: &'a Pool<MySql>,
