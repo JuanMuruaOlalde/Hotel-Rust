@@ -1,41 +1,29 @@
-use chrono::{DateTime, Local};
-
 use super::modelo::Estancia;
 use super::persistencia_estancias::DatosDeEstancias;
-use crate::habitaciones::modelo::Habitacion;
-use crate::huespedes::modelo::Huesped;
 
 pub struct DatosDeEstanciasPruebas {
-    pub datos: Vec<Estancia>,
+    lista_de_estancias: Vec<Estancia>,
 }
 
-impl Default for DatosDeEstanciasPruebas {
-    fn default() -> Self {
+impl DatosDeEstanciasPruebas {
+    pub fn new() -> Self {
         Self {
-            datos: Default::default(),
+            lista_de_estancias: Vec::new(),
         }
     }
 }
 
 impl DatosDeEstancias for DatosDeEstanciasPruebas {
-    fn crear_estancia(
-        &mut self,
-        habitaciones: Vec<Habitacion>,
-        huespedes: Vec<Huesped>,
-        salida_prevista: DateTime<Local>,
-    ) -> Result<String, String> {
-        let estancia = Estancia {
-            habitaciones: habitaciones,
-            huespedes: huespedes,
-            entrada_real: Local::now(),
-            salida_prevista: salida_prevista,
-            salida_real: None,
-        };
-        self.datos.push(estancia);
-        Ok(String::from("Estancia creada correctamente"))
+    fn guardar(&mut self, estancia: Estancia) -> Result<(), String> {
+        self.lista_de_estancias.push(estancia);
+        Ok(())
     }
 
-    fn get_estancias(&self) -> Vec<Estancia> {
-        self.datos.clone()
+    fn get_estancias_activas(&self) -> Vec<Estancia> {
+        self.lista_de_estancias
+            .clone()
+            .into_iter()
+            .filter(|x| x.salida_real == None)
+            .collect()
     }
 }

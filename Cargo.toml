@@ -7,6 +7,6 @@ publish = false
 [dependencies]
 chrono = "0.4.41"
 uuid = { version="1.16.0", features=["v7"] }
-dotenv = "0.15.0"
 sqlx = { version="0.8.6", features=["runtime-tokio", "mysql", "migrate"] }
 tokio = { version="1.45.1", features=["rt", "macros"] }
+dotenvy = "0.15.7"

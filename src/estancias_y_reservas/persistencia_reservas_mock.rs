@@ -4,8 +4,8 @@ pub struct DatosDeReservasPruebas {}
 
 impl DatosDeReservas for DatosDeReservasPruebas {}
 
-impl Default for DatosDeReservasPruebas {
-    fn default() -> Self {
+impl DatosDeReservasPruebas {
+    pub fn new() -> Self {
         Self {}
     }
 }

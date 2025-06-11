@@ -1,68 +1,63 @@
+use hotel_rust::util::DocumentoDeIdentidad;
 use sqlx::{MySql, Pool};
 
-use hotel_rust::estancias_y_reservas::modelo::EstanciasYReservas;
-use hotel_rust::estancias_y_reservas::persistencia_estancias_mariadb::DatosDeEstanciasMariaDB;
-use hotel_rust::estancias_y_reservas::persistencia_reservas_mariadb::DatosDeReservasMariaDB;
-use hotel_rust::habitaciones::modelo::Habitacion;
 use hotel_rust::habitaciones::modelo::Habitaciones;
-use hotel_rust::habitaciones::persistencia::DatosDeHabitaciones;
+use hotel_rust::habitaciones::modelo::TipoDeBaño;
+use hotel_rust::habitaciones::modelo::TipoDeHabitacion;
 use hotel_rust::habitaciones::persistencia_mariadb::DatosDeHabitacionesMariaDB;
-use hotel_rust::huespedes::modelo::Huesped;
 use hotel_rust::huespedes::modelo::Huespedes;
-use hotel_rust::huespedes::persistencia::DatosDeHuespedes;
 use hotel_rust::huespedes::persistencia_mariadb::DatosDeHuespedesMariaDB;
-use hotel_rust::util::DocumentoDeIdentidad;
+use hotel_rust::util::CorreoElectronico;
+use hotel_rust::util::Nacionalidad;
+use hotel_rust::util::Telefono;
 
 pub const ID_DE_UNA_HABITACION_DE_PRUEBAS: &str = "PRB101";
 pub const ID_DE_OTRA_HABITACION_DE_PRUEBAS: &str = "PRB102";
 pub const ID_DE_UN_HUESPED_DE_PRUEBAS: &str = "99199199199";
 pub const ID_DE_OTRO_HUESPED_DE_PRUEBAS: &str = "88188188188";
 
-pub struct DatosParaPruebasDeEstanciasYReservas<'a> {
-    pub estancias_y_reservas:
-        EstanciasYReservas<DatosDeEstanciasMariaDB<'a>, DatosDeReservasMariaDB<'a>>,
-    pub habitacion01: Habitacion,
-    pub habitacion02: Habitacion,
-    pub un_huesped: Huesped,
-    pub otro_huesped: Huesped,
+pub fn preparar_habitaciones_para_pruebas(
+    conexion: &Pool<MySql>,
+) -> Habitaciones<DatosDeHabitacionesMariaDB> {
+    let mut habitaciones = Habitaciones::new(DatosDeHabitacionesMariaDB::new(conexion));
+    habitaciones
+        .añadir_una_nueva(
+            "ID_DE_UNA_HABITACION_DE_PRUEBAS",
+            TipoDeHabitacion::SENCILLA,
+            TipoDeBaño::ConDUCHA,
+        )
+        .unwrap();
+    habitaciones
+        .añadir_una_nueva(
+            "ID_DE_OTRA_HABITACION_DE_PRUEBAS",
+            TipoDeHabitacion::DOBLE,
+            TipoDeBaño::ConBAÑERA,
+        )
+        .unwrap();
+    habitaciones
 }
 
-impl<'a> DatosParaPruebasDeEstanciasYReservas<'a> {
-    pub async fn new(conexion: &'a Pool<MySql>) -> Self {
-        let estancias_y_reservas = EstanciasYReservas {
-            estancias: DatosDeEstanciasMariaDB::new(conexion),
-            reservas: DatosDeReservasMariaDB::new(conexion),
-        };
-
-        let habitaciones = Habitaciones {
-            datos: DatosDeHabitacionesMariaDB::new(conexion),
-        };
-        let habitacion01 = habitaciones
-            .datos
-            .get_habitacion(ID_DE_UNA_HABITACION_DE_PRUEBAS)
-            .unwrap();
-        let habitacion02 = habitaciones
-            .datos
-            .get_habitacion(ID_DE_OTRA_HABITACION_DE_PRUEBAS)
-            .unwrap();
-
-        let huespedes = Huespedes {
-            datos: DatosDeHuespedesMariaDB::new(conexion),
-        };
-        let un_huesped = huespedes
-            .datos
-            .get_huesped(DocumentoDeIdentidad::new(ID_DE_UN_HUESPED_DE_PRUEBAS))
-            .unwrap();
-        let otro_huesped = huespedes
-            .datos
-            .get_huesped(DocumentoDeIdentidad::new(ID_DE_OTRO_HUESPED_DE_PRUEBAS))
-            .unwrap();
-        Self {
-            estancias_y_reservas,
-            habitacion01,
-            habitacion02,
-            un_huesped,
-            otro_huesped,
-        }
-    }
+pub fn preparar_huespedes_para_pruebas(
+    conexion: &Pool<MySql>,
+) -> Huespedes<DatosDeHuespedesMariaDB> {
+    let mut huespedes = Huespedes::new(DatosDeHuespedesMariaDB::new(conexion));
+    huespedes
+        .añadir_una_persona_nueva(
+            "Benzirpi Mirvento",
+            Nacionalidad::IT_Italy,
+            DocumentoDeIdentidad::new(ID_DE_UN_HUESPED_DE_PRUEBAS),
+            Telefono::new("666777999"),
+            CorreoElectronico::new("benzirpi@example.com").unwrap(),
+        )
+        .unwrap();
+    huespedes
+        .añadir_una_persona_nueva(
+            "Julliane Zirteni",
+            Nacionalidad::IT_Italy,
+            DocumentoDeIdentidad::new(ID_DE_OTRO_HUESPED_DE_PRUEBAS),
+            Telefono::new("666777888"),
+            CorreoElectronico::new("julliane@example.com").unwrap(),
+        )
+        .unwrap();
+    huespedes
 }

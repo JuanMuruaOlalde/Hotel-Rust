@@ -1,4 +1,3 @@
-use dotenv::dotenv;
 use hotel_rust::{
     estancias_y_reservas::{
         modelo::EstanciasYReservas, persistencia_estancias_mariadb::DatosDeEstanciasMariaDB,
@@ -14,7 +13,7 @@ async fn main() {
     println!();
 
     println!("Estableciendo conexión con la base de datos...");
-    dotenv().ok();
+    dotenvy::dotenv().ok();
     let conexion_con_la_bd = MySqlPoolOptions::new()
         .max_connections(1)
         .connect(
@@ -35,24 +34,20 @@ async fn main() {
     //     Err(e) => println!("Error: {:?}", e),
     // }
 
-    // aquí irá el código que inicializa y lanza la aplicación
+    let mut estancias_y_reservas = EstanciasYReservas::new(
+        DatosDeEstanciasMariaDB::new(&conexion_con_la_bd),
+        DatosDeReservasMariaDB::new(&conexion_con_la_bd),
+    );
+    let mut habitaciones = Habitaciones::new(DatosDeHabitacionesMariaDB::new(&conexion_con_la_bd));
+    let mut huespedes = Huespedes::new(DatosDeHuespedesMariaDB::new(&conexion_con_la_bd));
+    //etc, etc
+    // aquí irá el resto del código que inicializa y lanza la aplicación
+
+    //como todavia no se lanza la aplicación...
+    //...esto es simplemente por ver algo si la ejecutamos.
     println!();
     println!("Hello, hotel!");
     println!();
-
-    // let mut estancias_y_reservas = Estancias_y_Reservas {
-    //     estancias: DatosDeEstanciasMariaDB::new(&conexion_con_la_bd),
-    //     reservas: DatosDeReservasMariaDB::new(&conexion_con_la_bd),
-    // };
-
-    // let habitaciones = Habitaciones {
-    //     datos: DatosDeHabitacionesMariaDB::new(&conexion_con_la_bd),
-    // };
-    // let huespedes = Huespedes {
-    //     datos: DatosDeHuespedesMariaDB::new(&conexion_con_la_bd),
-    // };
-
-    //etc, etc
 
     conexion_con_la_bd.close().await;
 }

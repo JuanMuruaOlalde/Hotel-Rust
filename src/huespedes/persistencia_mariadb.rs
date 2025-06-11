@@ -15,6 +15,10 @@ impl<'a> DatosDeHuespedes for DatosDeHuespedesMariaDB<'a> {
     fn get_huesped(&self, id: crate::util::DocumentoDeIdentidad) -> Result<Huesped, String> {
         todo!()
     }
+
+    fn guardar(&mut self, huesped: Huesped) -> Result<(), String> {
+        todo!()
+    }
 }
 
 impl<'a> DatosDeHuespedesMariaDB<'a> {
