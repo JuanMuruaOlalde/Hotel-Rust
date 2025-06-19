@@ -1,7 +1,8 @@
 use chrono::{DateTime, Local};
+use uuid::Uuid;
 
-use super::persistencia_estancias::DatosDeEstancias;
-use super::persistencia_reservas::DatosDeReservas;
+use super::datos_estancias::DatosDeEstancias;
+use super::datos_reservas::DatosDeReservas;
 use crate::habitaciones::modelo::Habitacion;
 use crate::huespedes::modelo::Huesped;
 
@@ -25,36 +26,30 @@ where
             reservas: datos_reservas,
         }
     }
-    pub fn crear_estancia(
+    pub async fn crear_estancia(
         &mut self,
         habitaciones: Vec<Habitacion>,
         huespedes: Vec<Huesped>,
         salida_prevista: DateTime<Local>,
     ) -> Result<(), String> {
-        let estancia = Estancia {
-            habitaciones: habitaciones,
-            huespedes: huespedes,
-            entrada_real: Local::now(),
-            salida_prevista: salida_prevista,
-            salida_real: None,
-        };
-        match self.estancias.guardar(estancia) {
+        let estancia = Estancia::new(habitaciones, huespedes, salida_prevista);
+        match self.estancias.guardar(estancia).await {
             Ok(()) => Ok(()),
             Err(e) => Err(e),
         }
     }
 
-    pub fn la_habitacion_esta_libre(&self, nombre: &str) -> bool {
-        if self
-            .estancias
-            .get_estancias_activas()
+    pub async fn la_habitacion_esta_libre(&self, nombre: &str) -> bool {
+        let habitaciones_ocupadas = match self.estancias.get_habitaciones_ocupadas().await {
+            Ok(h) => h,
+            Err(e) => {
+                println!("Error {e}");
+                Vec::new() //TODO, esto no está bien, en caso de error devolvera que la habitacion esta libre; habria que hacer alguna otra cosa, pero no se me ocurre qué...
+            }
+        };
+        if habitaciones_ocupadas
             .iter()
-            .any(|estancia| {
-                estancia
-                    .get_habitaciones()
-                    .iter()
-                    .any(|habitacion| habitacion.id_publico_nombre == nombre)
-            })
+            .any(|habitacion| habitacion.nombre_habitacion == nombre)
         {
             return false;
         } else {
@@ -71,6 +66,7 @@ where
 // si hubiera más información iria en otro/s struct secundario/s.
 #[derive(Clone)]
 pub struct Estancia {
+    id_interno: uuid::Uuid,
     pub habitaciones: Vec<Habitacion>,
     pub huespedes: Vec<Huesped>,
     pub entrada_real: DateTime<Local>,
@@ -78,9 +74,39 @@ pub struct Estancia {
     pub salida_real: Option<DateTime<Local>>,
 }
 
+pub struct HabitacionOcupada {
+    pub id_interno_habitacion: uuid::Uuid,
+    pub nombre_habitacion: String,
+    pub id_interno_estancia: uuid::Uuid,
+    pub salida_prevista: DateTime<Local>,
+}
+
 impl Estancia {
     pub fn get_habitaciones(&self) -> Vec<Habitacion> {
         self.habitaciones.clone()
+    }
+
+    pub fn get_huespedes(&self) -> Vec<Huesped> {
+        self.huespedes.clone()
+    }
+
+    pub fn new(
+        habitaciones: Vec<Habitacion>,
+        huespedes: Vec<Huesped>,
+        salida_prevista: DateTime<Local>,
+    ) -> Self {
+        Self {
+            id_interno: Uuid::now_v7(),
+            habitaciones: habitaciones,
+            huespedes: huespedes,
+            entrada_real: Local::now(),
+            salida_prevista: salida_prevista,
+            salida_real: None,
+        }
+    }
+
+    pub fn get_id_interno(&self) -> Uuid {
+        self.id_interno
     }
 }
 
@@ -96,26 +122,28 @@ mod tests {
     use chrono::{Duration, Local};
 
     use super::*;
+    use crate::habitaciones::datos_mock::DatosDeHabitacionesPruebas;
     use crate::habitaciones::modelo::{Habitaciones, TipoDeBaño, TipoDeHabitacion};
-    use crate::habitaciones::persistencia_mock::DatosDeHabitacionesPruebas;
+    use crate::huespedes::datos_mock::DatosDeHuespedesPruebas;
     use crate::huespedes::modelo::Huespedes;
-    use crate::huespedes::persistencia_mock::DatosDeHuespedesPruebas;
     use crate::util::{CorreoElectronico, DocumentoDeIdentidad, Nacionalidad, Telefono};
 
-    use crate::estancias_y_reservas::persistencia_estancias_mock::DatosDeEstanciasPruebas;
-    use crate::estancias_y_reservas::persistencia_reservas_mock::DatosDeReservasPruebas;
+    use crate::estancias_y_reservas::datos_estancias_mock::DatosDeEstanciasPruebas;
+    use crate::estancias_y_reservas::datos_reservas_mock::DatosDeReservasPruebas;
 
-    #[test]
-    fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas() {
+    #[tokio::test]
+    async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas() {
         let mut habitaciones = Habitaciones::new(DatosDeHabitacionesPruebas::new());
         habitaciones
             .añadir_una_nueva("101", TipoDeHabitacion::SENCILLA, TipoDeBaño::ConDUCHA)
+            .await
             .unwrap();
         habitaciones
             .añadir_una_nueva("102", TipoDeHabitacion::DOBLE, TipoDeBaño::ConBAÑERA)
+            .await
             .unwrap();
-        let habitacion01 = habitaciones.get_habitacion("101").unwrap();
-        let habitacion02 = habitaciones.get_habitacion("102").unwrap();
+        let habitacion01 = habitaciones.get_habitacion("101").await.unwrap();
+        let habitacion02 = habitaciones.get_habitacion("102").await.unwrap();
 
         let mut huespedes = Huespedes::new(DatosDeHuespedesPruebas::new());
         huespedes
@@ -126,6 +154,7 @@ mod tests {
                 Telefono::new("666777999"),
                 CorreoElectronico::new("benzirpi@example.com").unwrap(),
             )
+            .await
             .unwrap();
         huespedes
             .añadir_una_persona_nueva(
@@ -135,29 +164,45 @@ mod tests {
                 Telefono::new("666777888"),
                 CorreoElectronico::new("julliane@example.com").unwrap(),
             )
+            .await
             .unwrap();
         let un_huesped = huespedes
             .get_huesped(DocumentoDeIdentidad::new("99199199199"))
+            .await
             .unwrap();
         let una_huesped = huespedes
             .get_huesped(DocumentoDeIdentidad::new("88188188188"))
+            .await
             .unwrap();
 
         let mut estancias_y_reservas = EstanciasYReservas::new(
             DatosDeEstanciasPruebas::new(),
             DatosDeReservasPruebas::new(),
         );
-        assert_eq!(estancias_y_reservas.la_habitacion_esta_libre("101"), true);
-        assert_eq!(estancias_y_reservas.la_habitacion_esta_libre("102"), true);
+        assert_eq!(
+            estancias_y_reservas.la_habitacion_esta_libre("101").await,
+            true
+        );
+        assert_eq!(
+            estancias_y_reservas.la_habitacion_esta_libre("102").await,
+            true
+        );
 
         let habitaciones_a_ocupar = vec![habitacion01, habitacion02];
         let huespedes_a_alojar = vec![un_huesped, una_huesped];
         let salida_prevista = Local::now() + Duration::days(2);
         estancias_y_reservas
             .crear_estancia(habitaciones_a_ocupar, huespedes_a_alojar, salida_prevista)
+            .await
             .unwrap();
 
-        assert_eq!(estancias_y_reservas.la_habitacion_esta_libre("101"), false);
-        assert_eq!(estancias_y_reservas.la_habitacion_esta_libre("102"), false);
+        assert_eq!(
+            estancias_y_reservas.la_habitacion_esta_libre("101").await,
+            false
+        );
+        assert_eq!(
+            estancias_y_reservas.la_habitacion_esta_libre("102").await,
+            false
+        );
     }
 }

@@ -1,5 +1,5 @@
+use super::datos::DatosDeHabitaciones;
 use super::modelo::Habitacion;
-use super::persistencia::DatosDeHabitaciones;
 
 pub struct DatosDeHabitacionesPruebas {
     lista_de_habitaciones: Box<Vec<Habitacion>>,
@@ -14,7 +14,7 @@ impl DatosDeHabitacionesPruebas {
 }
 
 impl DatosDeHabitaciones for DatosDeHabitacionesPruebas {
-    fn get_habitacion(&self, nombre: &str) -> Result<Habitacion, String> {
+    async fn get_habitacion(&self, nombre: &str) -> Result<Habitacion, String> {
         let habitacion = self
             .lista_de_habitaciones
             .iter()
@@ -25,7 +25,7 @@ impl DatosDeHabitaciones for DatosDeHabitacionesPruebas {
         }
     }
 
-    fn guardar(&mut self, habitacion: Habitacion) -> Result<(), String> {
+    async fn guardar(&mut self, habitacion: Habitacion) -> Result<(), String> {
         self.lista_de_habitaciones.push(habitacion.clone());
         Ok(())
     }

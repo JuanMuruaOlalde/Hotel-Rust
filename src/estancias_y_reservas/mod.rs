@@ -1,7 +1,7 @@
 pub mod modelo;
-pub mod persistencia_estancias;
-pub mod persistencia_estancias_mariadb;
-mod persistencia_estancias_mock;
-pub mod persistencia_reservas;
-pub mod persistencia_reservas_mariadb;
-mod persistencia_reservas_mock;
+pub mod datos_estancias;
+pub mod datos_estancias_mariadb;
+mod datos_estancias_mock;
+pub mod datos_reservas;
+pub mod datos_reservas_mariadb;
+mod datos_reservas_mock;

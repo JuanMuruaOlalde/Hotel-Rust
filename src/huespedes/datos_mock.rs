@@ -1,7 +1,7 @@
 use crate::util::DocumentoDeIdentidad;
 
+use super::datos::DatosDeHuespedes;
 use super::modelo::Huesped;
-use super::persistencia::DatosDeHuespedes;
 
 pub struct DatosDeHuespedesPruebas {
     lista_de_huespedes: Box<Vec<Huesped>>,
@@ -16,15 +16,18 @@ impl DatosDeHuespedesPruebas {
 }
 
 impl DatosDeHuespedes for DatosDeHuespedesPruebas {
-    fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<Huesped, String> {
-        let huesped = self.lista_de_huespedes.iter().find(|x| x.id_interno == id);
+    async fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<Huesped, String> {
+        let huesped = self
+            .lista_de_huespedes
+            .iter()
+            .find(|x| x.get_id_interno() == id);
         match huesped {
             Some(h) => Ok(h.clone()),
             None => Err(format!("No existe huesped con id_interno {id}")),
         }
     }
 
-    fn get_huesped(&self, id: DocumentoDeIdentidad) -> Result<Huesped, String> {
+    async fn get_huesped(&self, id: DocumentoDeIdentidad) -> Result<Huesped, String> {
         let huesped = self
             .lista_de_huespedes
             .iter()
@@ -35,7 +38,7 @@ impl DatosDeHuespedes for DatosDeHuespedesPruebas {
         }
     }
 
-    fn guardar(&mut self, huesped: Huesped) -> Result<(), String> {
+    async fn guardar(&mut self, huesped: Huesped) -> Result<(), String> {
         self.lista_de_huespedes.push(huesped);
         Ok(())
     }
