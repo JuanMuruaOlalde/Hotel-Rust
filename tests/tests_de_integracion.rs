@@ -3,11 +3,11 @@ mod common;
 use chrono::{Duration, Local};
 
 use hotel_rust::{
+    comun::documento_de_identidad::DocumentoDeIdentidad,
     estancias_y_reservas::{
         datos_estancias_mariadb::DatosDeEstanciasMariaDB,
         datos_reservas_mariadb::DatosDeReservasMariaDB, modelo::EstanciasYReservas,
     },
-    util::DocumentoDeIdentidad,
 };
 use sqlx::{MySql, Pool};
 

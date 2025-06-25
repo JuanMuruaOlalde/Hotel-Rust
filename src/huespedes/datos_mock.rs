@@ -1,4 +1,4 @@
-use crate::util::DocumentoDeIdentidad;
+use crate::comun::documento_de_identidad::DocumentoDeIdentidad;
 
 use super::datos::DatosDeHuespedes;
 use super::modelo::Huesped;

@@ -1,8 +1,6 @@
-use std::io::empty;
-
 use sqlx::{MySql, Pool, Row};
 
-use crate::util::DocumentoDeIdentidad;
+use crate::comun::documento_de_identidad::DocumentoDeIdentidad;
 
 use super::datos::DatosDeHuespedes;
 use super::modelo::Huesped;
@@ -16,21 +14,21 @@ impl<'a> DatosDeHuespedesMariaDB<'a> {
         &self,
         con_id: bool,
         id: uuid::Uuid,
-        documento: crate::util::DocumentoDeIdentidad,
+        documento: DocumentoDeIdentidad,
     ) -> Result<Huesped, String> {
-        let mut clausula_where: &str = "";
-        let mut dato_a_buscar: &str = "";
+        let clausula_where: String;
+        let dato_a_buscar: String;
         if con_id {
-            let clausula_where = "WHERE id = ?";
-            let dato_a_buscar = id.to_string();
+            clausula_where = String::from("WHERE id = ?");
+            dato_a_buscar = id.to_string();
         } else {
-            let clausula_where = "WHERE documento_de_id = ?";
-            let dato_a_buscar = documento.to_string();
+            clausula_where = String::from("WHERE documento_de_id = ?");
+            dato_a_buscar = documento.to_string();
         }
         let resultado = sqlx::query(
             &format!("SELECT id, nombre_y_apellidos, nacionalidad, documento_de_id, telefono, correo_e FROM huespedes {clausula_where}"),
         )
-        .bind(id.to_string())
+        .bind(dato_a_buscar)
         .fetch_optional(self.conexion_con_la_bd)
         .await;
         match resultado {
@@ -79,7 +77,7 @@ impl<'a> DatosDeHuespedes for DatosDeHuespedesMariaDB<'a> {
             .await
     }
 
-    async fn get_huesped(&self, id: crate::util::DocumentoDeIdentidad) -> Result<Huesped, String> {
+    async fn get_huesped(&self, id: DocumentoDeIdentidad) -> Result<Huesped, String> {
         self.ajustar_y_ejecutar_select_para_get_huesped(false, uuid::Uuid::nil(), id)
             .await
     }

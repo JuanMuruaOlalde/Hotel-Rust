@@ -3,8 +3,10 @@ use std::str::FromStr;
 use uuid::Uuid;
 
 use super::datos::DatosDeHuespedes;
-use crate::util::CorreoElectronico;
-use crate::util::{DocumentoDeIdentidad, Nacionalidad, Telefono};
+use crate::comun::{
+    correo_electronico::CorreoElectronico, documento_de_identidad::DocumentoDeIdentidad,
+    nacionalidad::Nacionalidad, telefono::Telefono,
+};
 
 pub struct Huespedes<T: DatosDeHuespedes> {
     datos: T,

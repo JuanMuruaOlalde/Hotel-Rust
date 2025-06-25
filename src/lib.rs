@@ -2,7 +2,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+pub mod comun;
 pub mod estancias_y_reservas;
 pub mod habitaciones;
 pub mod huespedes;
-pub mod util;

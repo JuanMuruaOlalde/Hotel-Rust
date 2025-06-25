@@ -2,8 +2,6 @@ use chrono::Local;
 use sqlx::{MySql, Pool, Row};
 
 use crate::estancias_y_reservas::modelo::HabitacionOcupada;
-use crate::habitaciones::modelo::Habitacion;
-use crate::huespedes::modelo::Huesped;
 
 use super::datos_estancias::DatosDeEstancias;
 use super::modelo::Estancia;

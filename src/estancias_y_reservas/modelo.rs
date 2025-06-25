@@ -122,11 +122,14 @@ mod tests {
     use chrono::{Duration, Local};
 
     use super::*;
+    use crate::comun::{
+        correo_electronico::CorreoElectronico, documento_de_identidad::DocumentoDeIdentidad,
+        nacionalidad::Nacionalidad, telefono::Telefono,
+    };
     use crate::habitaciones::datos_mock::DatosDeHabitacionesPruebas;
     use crate::habitaciones::modelo::{Habitaciones, TipoDeBaño, TipoDeHabitacion};
     use crate::huespedes::datos_mock::DatosDeHuespedesPruebas;
     use crate::huespedes::modelo::Huespedes;
-    use crate::util::{CorreoElectronico, DocumentoDeIdentidad, Nacionalidad, Telefono};
 
     use crate::estancias_y_reservas::datos_estancias_mock::DatosDeEstanciasPruebas;
     use crate::estancias_y_reservas::datos_reservas_mock::DatosDeReservasPruebas;

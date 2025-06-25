@@ -1,15 +1,15 @@
-use hotel_rust::util::DocumentoDeIdentidad;
 use sqlx::{MySql, Pool};
 
+use hotel_rust::comun::correo_electronico::CorreoElectronico;
+use hotel_rust::comun::documento_de_identidad::DocumentoDeIdentidad;
+use hotel_rust::comun::nacionalidad::Nacionalidad;
+use hotel_rust::comun::telefono::Telefono;
 use hotel_rust::habitaciones::datos_mariadb::DatosDeHabitacionesMariaDB;
 use hotel_rust::habitaciones::modelo::Habitaciones;
 use hotel_rust::habitaciones::modelo::TipoDeBaño;
 use hotel_rust::habitaciones::modelo::TipoDeHabitacion;
 use hotel_rust::huespedes::datos_mariadb::DatosDeHuespedesMariaDB;
 use hotel_rust::huespedes::modelo::Huespedes;
-use hotel_rust::util::CorreoElectronico;
-use hotel_rust::util::Nacionalidad;
-use hotel_rust::util::Telefono;
 
 pub const ID_DE_UNA_HABITACION_DE_PRUEBAS: &str = "PRB101";
 pub const ID_DE_OTRA_HABITACION_DE_PRUEBAS: &str = "PRB102";
