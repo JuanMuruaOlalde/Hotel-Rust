@@ -1,4 +1,4 @@
-pub mod datos;
-pub mod datos_mariadb;
-pub mod datos_mock;
-pub mod modelo;
+pub mod habitaciones;
+pub mod persistencia;
+pub mod persistencia_en_mariadb;
+pub mod persistencia_mock;

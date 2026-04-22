@@ -1,10 +1,10 @@
 use chrono::Local;
 use sqlx::{MySql, Pool, Row};
 
-use crate::estancias_y_reservas::modelo::HabitacionOcupada;
+use crate::estancias_y_reservas::estancias_y_reservas::HabitacionOcupada;
 
-use super::datos_estancias::DatosDeEstancias;
-use super::modelo::Estancia;
+use super::estancias_y_reservas::Estancia;
+use super::persistencia_de_estancias::DatosDeEstancias;
 
 pub struct DatosDeEstanciasMariaDB<'a> {
     conexion_con_la_bd: &'a Pool<MySql>,

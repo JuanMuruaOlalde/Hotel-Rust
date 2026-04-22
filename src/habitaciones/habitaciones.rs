@@ -1,7 +1,7 @@
 use std::str::FromStr;
 use uuid::Uuid;
 
-use super::datos::DatosDeHabitaciones;
+use super::persistencia::DatosDeHabitaciones;
 
 pub struct Habitaciones<T: DatosDeHabitaciones> {
     datos: T,

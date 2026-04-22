@@ -1,10 +1,10 @@
 use hotel_rust::{
     estancias_y_reservas::{
-        modelo::EstanciasYReservas, datos_estancias_mariadb::DatosDeEstanciasMariaDB,
-        datos_reservas_mariadb::DatosDeReservasMariaDB,
+        persistencia_de_estancias_en_mariadb::DatosDeEstanciasMariaDB,
+        persistencia_de_reservas_en_mariadb::DatosDeReservasMariaDB, estancias_y_reservas::EstanciasYReservas,
     },
-    habitaciones::{modelo::Habitaciones, datos_mariadb::DatosDeHabitacionesMariaDB},
-    huespedes::{modelo::Huespedes, datos_mariadb::DatosDeHuespedesMariaDB},
+    habitaciones::{persistencia_en_mariadb::DatosDeHabitacionesMariaDB, habitaciones::Habitaciones},
+    huespedes::{persistencia_en_mariadb::DatosDeHuespedesMariaDB, huespedes::Huespedes},
 };
 use sqlx::mysql::MySqlPoolOptions;
 

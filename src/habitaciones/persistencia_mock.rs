@@ -1,5 +1,5 @@
-use super::datos::DatosDeHabitaciones;
-use super::modelo::Habitacion;
+use super::habitaciones::Habitacion;
+use super::persistencia::DatosDeHabitaciones;
 
 pub struct DatosDeHabitacionesPruebas {
     lista_de_habitaciones: Box<Vec<Habitacion>>,

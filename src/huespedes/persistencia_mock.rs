@@ -1,7 +1,7 @@
 use crate::comun::documento_de_identidad::DocumentoDeIdentidad;
 
-use super::datos::DatosDeHuespedes;
-use super::modelo::Huesped;
+use super::persistencia::DatosDeHuespedes;
+use super::huespedes::Huesped;
 
 pub struct DatosDeHuespedesPruebas {
     lista_de_huespedes: Box<Vec<Huesped>>,

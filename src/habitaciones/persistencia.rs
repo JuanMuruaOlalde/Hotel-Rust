@@ -1,4 +1,4 @@
-use super::modelo::Habitacion;
+use super::habitaciones::Habitacion;
 
 pub trait DatosDeHabitaciones {
     async fn get_habitacion(&self, nombre: &str) -> Result<Habitacion, String>;

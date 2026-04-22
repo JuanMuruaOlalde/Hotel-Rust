@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 use uuid::Uuid;
 
-use super::datos::DatosDeHuespedes;
+use super::persistencia::DatosDeHuespedes;
 use crate::comun::{
     correo_electronico::CorreoElectronico, documento_de_identidad::DocumentoDeIdentidad,
     nacionalidad::Nacionalidad, telefono::Telefono,

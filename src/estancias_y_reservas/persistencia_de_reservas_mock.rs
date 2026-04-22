@@ -1,4 +1,4 @@
-use super::datos_reservas::DatosDeReservas;
+use super::persistencia_de_reservas::DatosDeReservas;
 
 pub struct DatosDeReservasPruebas {}
 

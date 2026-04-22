@@ -1,6 +1,6 @@
-use crate::estancias_y_reservas::modelo::HabitacionOcupada;
+use crate::estancias_y_reservas::estancias_y_reservas::HabitacionOcupada;
 
-use super::modelo::Estancia;
+use super::estancias_y_reservas::Estancia;
 
 pub trait DatosDeEstancias {
     async fn guardar(&mut self, estancia: Estancia) -> Result<(), String>;

@@ -1,6 +1,6 @@
 use crate::comun::documento_de_identidad::DocumentoDeIdentidad;
 
-use super::modelo::Huesped;
+use super::huespedes::Huesped;
 
 pub trait DatosDeHuespedes {
     async fn get_huesped_con_id_interno(&self, id: uuid::Uuid) -> Result<Huesped, String>;

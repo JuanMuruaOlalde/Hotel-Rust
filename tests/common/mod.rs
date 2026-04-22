@@ -4,19 +4,19 @@ use hotel_rust::comun::correo_electronico::CorreoElectronico;
 use hotel_rust::comun::documento_de_identidad::DocumentoDeIdentidad;
 use hotel_rust::comun::nacionalidad::Nacionalidad;
 use hotel_rust::comun::telefono::Telefono;
-use hotel_rust::habitaciones::datos_mariadb::DatosDeHabitacionesMariaDB;
-use hotel_rust::habitaciones::modelo::Habitaciones;
-use hotel_rust::habitaciones::modelo::TipoDeBaño;
-use hotel_rust::habitaciones::modelo::TipoDeHabitacion;
-use hotel_rust::huespedes::datos_mariadb::DatosDeHuespedesMariaDB;
-use hotel_rust::huespedes::modelo::Huespedes;
+use hotel_rust::habitaciones::habitaciones::Habitaciones;
+use hotel_rust::habitaciones::habitaciones::TipoDeBaño;
+use hotel_rust::habitaciones::habitaciones::TipoDeHabitacion;
+use hotel_rust::habitaciones::persistencia_en_mariadb::DatosDeHabitacionesMariaDB;
+use hotel_rust::huespedes::huespedes::Huespedes;
+use hotel_rust::huespedes::persistencia_en_mariadb::DatosDeHuespedesMariaDB;
 
 pub const ID_DE_UNA_HABITACION_DE_PRUEBAS: &str = "PRB101";
 pub const ID_DE_OTRA_HABITACION_DE_PRUEBAS: &str = "PRB102";
 pub const ID_DE_UN_HUESPED_DE_PRUEBAS: &str = "99199199199";
 pub const ID_DE_OTRO_HUESPED_DE_PRUEBAS: &str = "88188188188";
 
-pub async fn preparar_habitaciones_para_pruebas(
+pub async fn preparar_habitaciones_para_pruebas_con_mariadb(
     conexion: &Pool<MySql>,
 ) -> Habitaciones<DatosDeHabitacionesMariaDB> {
     let mut habitaciones = Habitaciones::new(DatosDeHabitacionesMariaDB::new(conexion));
@@ -39,7 +39,7 @@ pub async fn preparar_habitaciones_para_pruebas(
     habitaciones
 }
 
-pub async fn preparar_huespedes_para_pruebas(
+pub async fn preparar_huespedes_para_pruebas_con_mariadb(
     conexion: &Pool<MySql>,
 ) -> Huespedes<DatosDeHuespedesMariaDB> {
     let mut huespedes = Huespedes::new(DatosDeHuespedesMariaDB::new(conexion));

@@ -5,17 +5,16 @@ use chrono::{Duration, Local};
 use hotel_rust::{
     comun::documento_de_identidad::DocumentoDeIdentidad,
     estancias_y_reservas::{
-        datos_estancias_mariadb::DatosDeEstanciasMariaDB,
-        datos_reservas_mariadb::DatosDeReservasMariaDB, modelo::EstanciasYReservas,
+        estancias_y_reservas::EstanciasYReservas,
+        persistencia_de_estancias_en_mariadb::DatosDeEstanciasMariaDB,
+        persistencia_de_reservas_en_mariadb::DatosDeReservasMariaDB,
     },
 };
 use sqlx::{MySql, Pool};
 
 #[sqlx::test]
-async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas_prueba_con_maria_db_(
-    conexion: Pool<MySql>,
-) {
-    let habitaciones = common::preparar_habitaciones_para_pruebas(&conexion).await;
+async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas(conexion: Pool<MySql>) {
+    let habitaciones = common::preparar_habitaciones_para_pruebas_con_mariadb(&conexion).await;
     let habitacion01 = habitaciones
         .get_habitacion(common::ID_DE_UNA_HABITACION_DE_PRUEBAS)
         .await
@@ -25,7 +24,7 @@ async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas_prueba_con
         .await
         .unwrap();
 
-    let huespedes = common::preparar_huespedes_para_pruebas(&conexion).await;
+    let huespedes = common::preparar_huespedes_para_pruebas_con_mariadb(&conexion).await;
     let un_huesped = huespedes
         .get_huesped(DocumentoDeIdentidad::new(
             common::ID_DE_UN_HUESPED_DE_PRUEBAS,

@@ -1,7 +1,7 @@
-use crate::estancias_y_reservas::modelo::HabitacionOcupada;
+use crate::estancias_y_reservas::estancias_y_reservas::HabitacionOcupada;
 
-use super::datos_estancias::DatosDeEstancias;
-use super::modelo::Estancia;
+use super::estancias_y_reservas::Estancia;
+use super::persistencia_de_estancias::DatosDeEstancias;
 
 pub struct DatosDeEstanciasPruebas {
     lista_de_estancias: Vec<Estancia>,

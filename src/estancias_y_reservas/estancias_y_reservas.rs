@@ -1,10 +1,10 @@
 use chrono::{DateTime, Local};
 use uuid::Uuid;
 
-use super::datos_estancias::DatosDeEstancias;
-use super::datos_reservas::DatosDeReservas;
-use crate::habitaciones::modelo::Habitacion;
-use crate::huespedes::modelo::Huesped;
+use super::persistencia_de_estancias::DatosDeEstancias;
+use super::persistencia_de_reservas::DatosDeReservas;
+use crate::habitaciones::habitaciones::Habitacion;
+use crate::huespedes::huespedes::Huesped;
 
 pub struct EstanciasYReservas<E, R>
 where
@@ -126,13 +126,13 @@ mod tests {
         correo_electronico::CorreoElectronico, documento_de_identidad::DocumentoDeIdentidad,
         nacionalidad::Nacionalidad, telefono::Telefono,
     };
-    use crate::habitaciones::datos_mock::DatosDeHabitacionesPruebas;
-    use crate::habitaciones::modelo::{Habitaciones, TipoDeBaño, TipoDeHabitacion};
-    use crate::huespedes::datos_mock::DatosDeHuespedesPruebas;
-    use crate::huespedes::modelo::Huespedes;
+    use crate::habitaciones::habitaciones::{Habitaciones, TipoDeBaño, TipoDeHabitacion};
+    use crate::habitaciones::persistencia_mock::DatosDeHabitacionesPruebas;
+    use crate::huespedes::persistencia_mock::DatosDeHuespedesPruebas;
+    use crate::huespedes::huespedes::Huespedes;
 
-    use crate::estancias_y_reservas::datos_estancias_mock::DatosDeEstanciasPruebas;
-    use crate::estancias_y_reservas::datos_reservas_mock::DatosDeReservasPruebas;
+    use crate::estancias_y_reservas::persistencia_de_estancias_mock::DatosDeEstanciasPruebas;
+    use crate::estancias_y_reservas::persistencia_de_reservas_mock::DatosDeReservasPruebas;
 
     #[tokio::test]
     async fn al_asignar_habitaciones_a_una_estancia_estas_quedan_ocupadas() {

@@ -2,8 +2,8 @@ use sqlx::{MySql, Pool, Row};
 
 use crate::comun::documento_de_identidad::DocumentoDeIdentidad;
 
-use super::datos::DatosDeHuespedes;
-use super::modelo::Huesped;
+use super::huespedes::Huesped;
+use super::persistencia::DatosDeHuespedes;
 
 pub struct DatosDeHuespedesMariaDB<'a> {
     conexion_con_la_bd: &'a Pool<MySql>,
