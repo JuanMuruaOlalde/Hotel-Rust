@@ -1,12 +1,12 @@
 use hotel_rust::{
     estancias_y_reservas::{
-        persistencia_de_estancias_en_mariadb::DatosDeEstanciasMariaDB,
-        persistencia_de_reservas_en_mariadb::DatosDeReservasMariaDB, estancias_y_reservas::EstanciasYReservas,
+        persistencia_de_estancias_en_sqlite::DatosDeEstanciasSQLite,
+        persistencia_de_reservas_en_sqlite::DatosDeReservasSQLite, estancias_y_reservas::EstanciasYReservas,
     },
-    habitaciones::{persistencia_en_mariadb::DatosDeHabitacionesMariaDB, habitaciones::Habitaciones},
-    huespedes::{persistencia_en_mariadb::DatosDeHuespedesMariaDB, huespedes::Huespedes},
+    habitaciones::{persistencia_en_sqlite::DatosDeHabitacionesSQLite, habitaciones::Habitaciones},
+    huespedes::{persistencia_en_sqlite::DatosDeHuespedesSQLite, huespedes::Huespedes},
 };
-use sqlx::mysql::MySqlPoolOptions;
+use sqlx::sqlite::SqlitePoolOptions;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -14,7 +14,7 @@ async fn main() {
 
     println!("Estableciendo conexión con la base de datos...");
     dotenvy::dotenv().ok();
-    let conexion_con_la_bd = MySqlPoolOptions::new()
+    let conexion_con_la_bd = SqlitePoolOptions::new()
         .max_connections(1)
         .connect(
             &std::env::var("DATABASE_URL")
@@ -35,11 +35,11 @@ async fn main() {
     // }
 
     let mut estancias_y_reservas = EstanciasYReservas::new(
-        DatosDeEstanciasMariaDB::new(&conexion_con_la_bd),
-        DatosDeReservasMariaDB::new(&conexion_con_la_bd),
+        DatosDeEstanciasSQLite::new(&conexion_con_la_bd),
+        DatosDeReservasSQLite::new(&conexion_con_la_bd),
     );
-    let mut habitaciones = Habitaciones::new(DatosDeHabitacionesMariaDB::new(&conexion_con_la_bd));
-    let mut huespedes = Huespedes::new(DatosDeHuespedesMariaDB::new(&conexion_con_la_bd));
+    let mut habitaciones = Habitaciones::new(DatosDeHabitacionesSQLite::new(&conexion_con_la_bd));
+    let mut huespedes = Huespedes::new(DatosDeHuespedesSQLite::new(&conexion_con_la_bd));
     //etc, etc
     // aquí irá el resto del código que inicializa y lanza la aplicación
 

@@ -1,7 +1,9 @@
 pub mod estancias_y_reservas;
 pub mod persistencia_de_estancias;
 pub mod persistencia_de_estancias_en_mariadb;
+pub mod persistencia_de_estancias_en_sqlite;
 mod persistencia_de_estancias_mock;
 pub mod persistencia_de_reservas;
 pub mod persistencia_de_reservas_en_mariadb;
+pub mod persistencia_de_reservas_en_sqlite;
 mod persistencia_de_reservas_mock;
